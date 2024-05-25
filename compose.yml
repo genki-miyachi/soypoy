@@ -1,0 +1,30 @@
+version: '3'
+services:
+  client:
+    build: ./client
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+  server:
+    build: ./server
+    ports:
+      - "4000:4000"
+    environment:
+      - DB_USER=myuser
+      - DB_PASSWORD=mypassword
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_DATABASE=mydatabase
+      - SERVER_PORT=4000
+      - JWT_SECRET=mysecret
+    depends_on:
+      - db
+  db:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: soypoy-dev
+    ports:
+      - "5432:5432"
